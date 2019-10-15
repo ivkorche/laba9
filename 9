@@ -1,0 +1,126 @@
+#pragma warning (disable : 4996)
+#include <stdio.h>
+#include <stdlib.h>
+#define NO 0 
+#define YES 1
+#define MAXARR 500		// размер результирующей строки
+#define MAXLINE 100		// размер входной строки
+
+int main(void)
+{
+	FILE *infile, *outfile;
+	char line[MAXLINE], resline[MAXARR], *in_ptr, *out_ptr;
+
+	// если при открытии потока файла для чтения произошла ошибка
+	if ((infile = fopen("file1.txt", "r")) == NULL)
+	{
+		printf("Error while file1 open\n");		// выводим сообщение об ошибке
+		system("pause");
+		return 0;		// заканчиваем программу
+	}
+	// если при открытии потока файла для записи произошла ошибка
+	if ((outfile = fopen("file2.txt", "w+")) == NULL)
+	{
+		printf("Error while file2 open\n");		// выводим сообщение об ошибке
+		system("pause");
+		return 0;		// заканчиваем программу
+	}
+
+	// цикл пока не дойдем до конца файла
+	do {
+		fgets(line, MAXLINE - 1, infile);	// получаем строку из потока ввода
+		in_ptr = line;		// задаем адрес входной строки
+		out_ptr = resline;	// задаем адрес итоговой строки
+
+		// цикл пока не дойдем до конца строки
+		do {
+			// если нашли цифру
+			if (*in_ptr >= '0' && *in_ptr <= '9')
+			{
+				// проверяем какая это цифра
+				switch (*in_ptr)
+				{
+				case '0':
+					*out_ptr++ = 'Z';
+					*out_ptr++ = 'E';
+					*out_ptr++ = 'R';
+					*out_ptr++ = 'O';
+					break;
+				case '1':
+					*out_ptr++ = 'O';
+					*out_ptr++ = 'N';
+					*out_ptr++ = 'E';
+					break;
+				case '2':
+					*out_ptr++ = 'T';
+					*out_ptr++ = 'W';
+					*out_ptr++ = 'O';
+					break;
+
+
+
+
+
+				case '3':
+					*out_ptr++ = 'T';
+					*out_ptr++ = 'H';
+					*out_ptr++ = 'R';
+					*out_ptr++ = 'E';
+					*out_ptr++ = 'E';
+					break;
+				case '4':
+					*out_ptr++ = 'F';
+					*out_ptr++ = 'O';
+					*out_ptr++ = 'U';
+					*out_ptr++ = 'R';
+					break;
+				case '5':
+					*out_ptr++ = 'F';
+					*out_ptr++ = 'I';
+					*out_ptr++ = 'V';
+					*out_ptr++ = 'E';
+					break;
+				case '6':
+					*out_ptr++ = 'S';
+					*out_ptr++ = 'I';
+					*out_ptr++ = 'X';
+					break;
+				case '7':
+					*out_ptr++ = 'S';
+					*out_ptr++ = 'E';
+					*out_ptr++ = 'V';
+					*out_ptr++ = 'E';
+					*out_ptr++ = 'N';
+					break;
+				case '8':
+					*out_ptr++ = 'E';
+					*out_ptr++ = 'I';
+					*out_ptr++ = 'G';
+					*out_ptr++ = 'H';
+					*out_ptr++ = 'T';
+					break;
+				case '9':
+					*out_ptr++ = 'N';
+					*out_ptr++ = 'I';
+					*out_ptr++ = 'N';
+					*out_ptr++ = 'E';
+					break;
+				}
+			}
+			// если текущий символ не цифра
+			else
+			{
+				*out_ptr++ = *in_ptr;	// переносим символ в результирующую строку и
+								   преходим к следующему адресу
+			}
+			in_ptr++;	// переходим на следующий элемент входной строки
+		} while (*in_ptr != '\0');
+		
+		*out_ptr = '\0';	// в последний символ результирующей строки записываем конец 
+					   строки
+		fputs(resline, outfile);	// выводим строку в поток вывода
+
+	} while (feof(infile) == NULL);
+
+	return 0;	
+}
